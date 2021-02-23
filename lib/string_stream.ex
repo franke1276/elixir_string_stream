@@ -16,14 +16,13 @@ defmodule StringStream do
     stream
     |> Stream.flat_map(&split_string/1)
     |> Stream.chunk_while("", &chunk_fun/2, &after_fun/1)
-    |> Enum.to_list()
   end
 
   def split_string(string) do
     case String.split(string, "\n") do
-        [head] -> [head]
-        list -> tag(list)
-      end
+      [head] -> [head]
+      list -> tag(list)
+    end
   end
 
   defp tag([]) do
@@ -34,10 +33,9 @@ defmodule StringStream do
     [e]
   end
 
-  defp tag([e| tail]) do
-    ["\n" <> e  | tag(tail)]
+  defp tag([e | tail]) do
+    ["\n" <> e | tag(tail)]
   end
-
 
   # def a(str) do
   #   case String.split(str, "\n", parts: 2) do

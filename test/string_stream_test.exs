@@ -3,21 +3,27 @@ defmodule StringStreamTest do
   doctest StringStream
 
   test "StringStream by_line" do
-    assert StringStream.by_line([]) == []
-    assert StringStream.by_line(["a"]) == ["a"]
-    assert StringStream.by_line(["ab"]) == ["ab"]
-    assert StringStream.by_line(["ab", ""]) == ["ab"]
-    assert StringStream.by_line(["ab", "cd"]) == ["abcd"]
-    assert StringStream.by_line(["ab\n"]) == ["ab"]
-    assert StringStream.by_line(["ab\ncd"]) == ["ab", "cd"]
-    assert StringStream.by_line(["ab\ncd\n"]) == ["ab", "cd"]
-    assert StringStream.by_line(["ab\ncd\nef"]) == ["ab", "cd", "ef"]
+    assert StringStream.by_line([]) |> Enum.to_list() == []
+    assert StringStream.by_line(["a"]) |> Enum.to_list() == ["a"]
+    assert StringStream.by_line(["ab"]) |> Enum.to_list() == ["ab"]
+    assert StringStream.by_line(["ab", ""]) |> Enum.to_list() == ["ab"]
+    assert StringStream.by_line(["ab", "cd"]) |> Enum.to_list() == ["abcd"]
+    assert StringStream.by_line(["ab\n"]) |> Enum.to_list() == ["ab"]
+    assert StringStream.by_line(["ab\ncd"]) |> Enum.to_list() == ["ab", "cd"]
+    assert StringStream.by_line(["ab\ncd\n"]) |> Enum.to_list() == ["ab", "cd"]
+    assert StringStream.by_line(["ab\ncd\nef"]) |> Enum.to_list() == ["ab", "cd", "ef"]
 
-    assert StringStream.by_line(["ab\n", "cd\n"]) == ["ab", "cd"]
-    assert StringStream.by_line(["ab\n", "cd"]) == ["ab", "cd"]
-    assert StringStream.by_line(["ab", "\ncd"]) == ["ab", "cd"]
-    assert StringStream.by_line(["ab", "\ncd\n"]) == ["ab", "cd"]
-    assert StringStream.by_line(["ab\n", "cd", "ef\ngh", "\nij"]) == ["ab", "cdef", "gh", "ij"]
+    assert StringStream.by_line(["ab\n", "cd\n"]) |> Enum.to_list() == ["ab", "cd"]
+    assert StringStream.by_line(["ab\n", "cd"]) |> Enum.to_list() == ["ab", "cd"]
+    assert StringStream.by_line(["ab", "\ncd"]) |> Enum.to_list() == ["ab", "cd"]
+    assert StringStream.by_line(["ab", "\ncd\n"]) |> Enum.to_list() == ["ab", "cd"]
+
+    assert StringStream.by_line(["ab\n", "cd", "ef\ngh", "\nij"]) |> Enum.to_list() == [
+             "ab",
+             "cdef",
+             "gh",
+             "ij"
+           ]
   end
 
   #  test "split1" do
@@ -29,8 +35,6 @@ defmodule StringStreamTest do
   #   {mu, _} = :timer.tc(&run_test2/1, [1000000])
   #   IO.puts("split2: #{mu / 1000} ms")
   # end
-
-
 
   # def run_test1(0) do
 
