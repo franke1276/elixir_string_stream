@@ -26,22 +26,38 @@ defmodule StringStream do
       end
   end
 
-  def tag([]) do
+  defp tag([]) do
     []
   end
-  def tag([e]) do
+
+  defp tag([e]) do
     [e]
   end
 
-  def tag([e| tail]) do
-    [e <> "\n" | tag(tail)]
+  defp tag([e| tail]) do
+    ["\n" <> e  | tag(tail)]
   end
 
 
+  # def a(str) do
+  #   case String.split(str, "\n", parts: 2) do
+  #     [_] -> true
+  #     [_, _] -> false
+  #   end
+  # end
+
+  # def b(str) do
+  #   case str do
+  #     "\n" <> _ -> false
+  #     _ -> true
+  #   end
+
+  # end
+
   defp chunk_fun(e, acc) do
-    case String.split(e, "\n", parts: 2) do
-      [head] -> {:cont, acc <> head}
-      [head, tail] -> {:cont, acc <> head, tail}
+    case e do
+      "\n" <> rest -> {:cont, acc <> rest, ""}
+      rest -> {:cont, acc <> rest}
     end
   end
 
